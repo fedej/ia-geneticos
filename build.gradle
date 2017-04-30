@@ -1,0 +1,20 @@
+group 'ar.com.inteligecia'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.8
+
+mainClassName = "ar.com.inteligencia.Application"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'io.jenetics:jenetics:3.7.0'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.16'
+}
