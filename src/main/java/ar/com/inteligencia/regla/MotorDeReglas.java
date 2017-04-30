@@ -1,5 +1,6 @@
-package ar.com.inteligencia;
+package ar.com.inteligencia.regla;
 
+import ar.com.inteligencia.Sospechoso;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.jenetics.BitGene;

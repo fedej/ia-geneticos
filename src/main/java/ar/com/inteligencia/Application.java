@@ -1,5 +1,6 @@
 package ar.com.inteligencia;
 
+import ar.com.inteligencia.regla.MotorDeReglas;
 import org.jenetics.BitChromosome;
 import org.jenetics.BitGene;
 import org.jenetics.Chromosome;
@@ -43,7 +44,7 @@ public class Application {
         // 3.) Create the execution environment.
         final Engine<BitGene, Double> engine = Engine
                 .builder(Application::eval, gtf)
-                .populationSize((int) Math.pow(2, 16))
+                .populationSize((int) Math.pow(2, 10))
                 .maximalPhenotypeAge(5L)
                 .optimize(Optimize.MAXIMUM)
                 .alterers(new Mutator<>(0.55), new SinglePointCrossover<>(0.06))

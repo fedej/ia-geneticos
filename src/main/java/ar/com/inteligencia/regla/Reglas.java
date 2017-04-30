@@ -1,5 +1,6 @@
-package ar.com.inteligencia;
+package ar.com.inteligencia.regla;
 
+import ar.com.inteligencia.Sospechoso;
 import ar.com.inteligencia.atributo.Apellido;
 import ar.com.inteligencia.atributo.EstadoCivil;
 import lombok.RequiredArgsConstructor;
