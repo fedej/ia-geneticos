@@ -17,13 +17,13 @@ public enum EstadoCivil {
         this.value = value;
     }
 
-    public static EstadoCivil fromChromosome(Chromosome<BitGene> chromosome) {
-        int gene0 = chromosome.getGene(6).getBit() ? 1 : 0;
-        int gene1 = chromosome.getGene(7).getBit() ? 1 : 0;
+    public static EstadoCivil fromChromosome(boolean[] atributos) {
+        int gene0 = atributos[4] ? 1 : 0;
+        int gene1 = atributos[5] ? 1 : 0;
         int genes = gene0 | (gene1 << 1);
         return Arrays
                 .stream(values())
-                .filter(apellido -> apellido.value == genes)
+                .filter(estadoCivil -> estadoCivil.value == genes)
                 .findFirst()
                 .get();
     }

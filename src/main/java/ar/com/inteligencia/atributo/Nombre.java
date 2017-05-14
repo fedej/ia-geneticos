@@ -1,8 +1,5 @@
 package ar.com.inteligencia.atributo;
 
-import org.jenetics.BitGene;
-import org.jenetics.Chromosome;
-
 import java.util.Arrays;
 
 /**
@@ -17,9 +14,9 @@ public enum Nombre {
         this.value = value;
     }
 
-    public static Nombre fromChromosome(Chromosome<BitGene> chromosome) {
-        int gene0 = chromosome.getGene(0).getBit() ? 1 : 0;
-        int gene1 = chromosome.getGene(1).getBit() ? 1 : 0;
+    public static Nombre fromChromosome(boolean[] atributos) {
+        int gene0 = atributos[0] ? 1 : 0;
+        int gene1 = atributos[1] ? 1 : 0;
         int genes = gene0 | (gene1 << 1);
         return Arrays
                 .stream(values())

@@ -17,9 +17,9 @@ public enum Apellido {
         this.value = value;
     }
 
-    public static Apellido fromChromosome(Chromosome<BitGene> chromosome) {
-        int gene0 = chromosome.getGene(2).getBit() ? 1 : 0;
-        int gene1 = chromosome.getGene(3).getBit() ? 1 : 0;
+    public static Apellido fromChromosome(boolean[] atributos) {
+        int gene0 = atributos[0] ? 1 : 0;
+        int gene1 = atributos[1] ? 1 : 0;
         int genes = gene0 | (gene1 << 1);
         return Arrays
                 .stream(values())

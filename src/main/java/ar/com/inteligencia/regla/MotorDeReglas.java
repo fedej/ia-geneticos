@@ -19,7 +19,7 @@ public class MotorDeReglas {
     }
 
     public double evaluar() {
-        double base = 20;
+        double base = 0;
 
         base += reglas._1_felixMasJovenQueAbad();
         base += reglas._2_viudoY50SonInocentes();
@@ -34,9 +34,11 @@ public class MotorDeReglas {
         base += reglas._11_cerveraBisiesto();
         base += reglas._12_ramiroMasJovenQueLamata();
 
-        //base += reglas._13_unSoloAsesino() ? FAIL_SCORE * 10 : -FAIL_SCORE *10;
-        //base += reglas._14_unSoloEstadoCivil() ? FAIL_SCORE * 10 : -FAIL_SCORE *10;
-        //base += reglas._15_unSoloApellido() ? FAIL_SCORE * 10 : -FAIL_SCORE *10;
+        //base += reglas._13_unSoloAsesino() ? 1 : FAIL_SCORE * 10;
+        //base += reglas._14_unSoloEstadoCivil() ? 1 : FAIL_SCORE * 10;
+        //base += reglas._15_unSoloApellido() ? 1 : FAIL_SCORE * 10;
+        //base += reglas._16_unSoloEdad() ? 1 : FAIL_SCORE * 10;
+        //base += reglas._17_unSoloProp() ? 1 : FAIL_SCORE * 10;
 
         //System.out.println(base);
 

@@ -3,8 +3,10 @@ package ar.com.inteligencia.regla;
 import ar.com.inteligencia.Sospechoso;
 import ar.com.inteligencia.atributo.Apellido;
 import ar.com.inteligencia.atributo.EstadoCivil;
+import ar.com.inteligencia.atributo.Nombre;
 import lombok.RequiredArgsConstructor;
 import org.jenetics.BitGene;
+import org.jenetics.Chromosome;
 import org.jenetics.Genotype;
 
 import java.util.Optional;
@@ -21,24 +23,32 @@ class Reglas {
 
     Reglas(Genotype<BitGene> genotype) {
 
-        genotype.stream()
-                .map(Sospechoso::new)
-                .forEach(s -> {
-                    switch (s.getNombre()) {
-                        case FELIX:
-                            felix = Optional.of(s);
-                            break;
-                        case GUSTAVO:
-                            gustavo = Optional.of(s);
-                            break;
-                        case JESUS:
-                            jesus = Optional.of(s);
-                            break;
-                        case RAMIRO:
-                            ramiro = Optional.of(s);
-                            break;
-                    }
-                });
+        final Chromosome<BitGene> chromosome = genotype.getChromosome();
+
+        boolean[] felix = new boolean[15];
+        for (int i = 0; i < 15; i++) {
+            felix[i] = chromosome.getGene(i).getBit();
+        }
+
+        boolean[] gustavo = new boolean[15];
+        for (int i = 15; i < 30; i++) {
+            gustavo[i - 15] = chromosome.getGene(i).getBit();
+        }
+
+        boolean[] jesus = new boolean[15];
+        for (int i = 30; i < 45; i++) {
+            jesus[i - 30] = chromosome.getGene(i).getBit();
+        }
+
+        boolean[] ramiro = new boolean[15];
+        for (int i = 45; i < 60; i++) {
+            ramiro[i - 45] = chromosome.getGene(i).getBit();
+        }
+
+        this.felix = Optional.of(new Sospechoso(Nombre.FELIX, felix));
+        this.gustavo = Optional.of(new Sospechoso(Nombre.GUSTAVO, gustavo));
+        this.jesus = Optional.of(new Sospechoso(Nombre.JESUS, jesus));
+        this.ramiro = Optional.of(new Sospechoso(Nombre.RAMIRO, ramiro));
 
     }
 
@@ -54,7 +64,7 @@ class Reglas {
 
         Optional<Sospechoso> abad = getByApellido(Apellido.ABAD);
         return abad
-                .map(sospechoso -> sospechoso.getEdad() > felix.get().getEdad() ? SUCCESS_SCORE : FAIL_SCORE)
+                .map(sospechoso -> sospechoso.getEdad() > felix.get().getEdad() ? 20 : FAIL_SCORE)
                 .orElse(PUNISH_SCORE);
     }
 
@@ -66,7 +76,7 @@ class Reglas {
         if (!viudo.isPresent() || !sospDe50.isPresent()) {
             return PUNISH_SCORE;
         } else {
-            return viudo.get().isInocente() && sospDe50.get().isInocente() ? SUCCESS_SCORE : FAIL_SCORE;
+            return viudo.get().isInocente() && sospDe50.get().isInocente() ? 10 : FAIL_SCORE;
         }
     }
 
@@ -78,14 +88,14 @@ class Reglas {
         if (!divorciado.isPresent() || !asesino.isPresent()) {
             return PUNISH_SCORE;
         } else {
-            return divorciado.get().isAcusoAGustavo() && asesino.get().isAcusoAGustavo() ? SUCCESS_SCORE : FAIL_SCORE;
+            return divorciado.get().isAcusoAGustavo() && asesino.get().isAcusoAGustavo() ? 10 : FAIL_SCORE;
         }
     }
 
     // 4
     double _4_casadoQuiereASuMujer() {
         Optional<Sospechoso> casado = getByEstadoCivil(EstadoCivil.CASADO);
-        return casado.map(sospechoso -> sospechoso.isQuiereASuMujer() ? SUCCESS_SCORE : FAIL_SCORE).orElse(PUNISH_SCORE);
+        return casado.map(sospechoso -> sospechoso.isQuiereASuMujer() ? 5 : FAIL_SCORE).orElse(PUNISH_SCORE);
     }
 
     // 5
@@ -96,7 +106,7 @@ class Reglas {
         if (!elDe42.isPresent() || !elDe44.isPresent()) {
             return PUNISH_SCORE;
         } else {
-            return (elDe42.get().isPrimosEnParis() && elDe44.get().isPrimosEnLondres()) ? SUCCESS_SCORE : FAIL_SCORE;
+            return (elDe42.get().isPrimosEnParis() && elDe44.get().isPrimosEnLondres()) ? 5 : FAIL_SCORE;
         }
 
     }
@@ -109,7 +119,7 @@ class Reglas {
 
         Optional<Sospechoso> soltero = getByEstadoCivil(EstadoCivil.SOLTERO);
         return soltero
-                .map(sospechoso -> sospechoso.getEdad() < felix.get().getEdad() ? SUCCESS_SCORE : FAIL_SCORE)
+                .map(sospechoso -> sospechoso.getEdad() < felix.get().getEdad() ? 20 : FAIL_SCORE)
                 .orElse(PUNISH_SCORE);
     }
 
@@ -136,7 +146,7 @@ class Reglas {
         return jesus.get().isAficionadoAlDomino()
                 && !felix.get().isAficionadoAlDomino()
                 && !gustavo.get().isAficionadoAlDomino()
-                && !ramiro.get().isAficionadoAlDomino() ? SUCCESS_SCORE : FAIL_SCORE;
+                && !ramiro.get().isAficionadoAlDomino() ? 5 : FAIL_SCORE;
     }
 
     // 8
@@ -147,7 +157,7 @@ class Reglas {
         if (!abad.isPresent() || !sospDe54.isPresent()) {
             return PUNISH_SCORE;
         } else {
-            return abad.get().isInocente() && sospDe54.get().isInocente() ? SUCCESS_SCORE : FAIL_SCORE;
+            return abad.get().isInocente() && sospDe54.get().isInocente() ? 10 : FAIL_SCORE;
         }
     }
 
@@ -159,7 +169,7 @@ class Reglas {
 
         Optional<Sospechoso> viudo = getByEstadoCivil(EstadoCivil.VIUDO);
         return viudo
-                .map(sospechoso -> sospechoso.getEdad() < gustavo.get().getEdad() ? SUCCESS_SCORE : FAIL_SCORE)
+                .map(sospechoso -> sospechoso.getEdad() < gustavo.get().getEdad() ? 20 : FAIL_SCORE)
                 .orElse(PUNISH_SCORE);
     }
 
@@ -167,7 +177,7 @@ class Reglas {
     double _10_villarCampeonBillar() {
         Optional<Sospechoso> villar = getByApellido(Apellido.VILLAR);
         return villar
-                .map(sospechoso -> sospechoso.isCampeonDeBillar() ? SUCCESS_SCORE : FAIL_SCORE)
+                .map(sospechoso -> sospechoso.isCampeonDeBillar() ? 5 : FAIL_SCORE)
                 .orElse(PUNISH_SCORE);
     }
 
@@ -186,7 +196,7 @@ class Reglas {
             return cervera.get().isNacioEnAnioBisiesto() &&
                     !lamata.get().isNacioEnAnioBisiesto() &&
                     !abad.get().isNacioEnAnioBisiesto() &&
-                    !villar.get().isNacioEnAnioBisiesto() ? SUCCESS_SCORE * 2 : FAIL_SCORE * 2;
+                    !villar.get().isNacioEnAnioBisiesto() ? 10 : FAIL_SCORE;
         }
 
     }
@@ -198,7 +208,7 @@ class Reglas {
         }
 
         Optional<Sospechoso> lamata = getByApellido(Apellido.LAMATA);
-        return lamata.map(sospechoso -> sospechoso.getEdad() > ramiro.get().getEdad() ? SUCCESS_SCORE * 5 : FAIL_SCORE * 6).orElse(PUNISH_SCORE);
+        return lamata.map(sospechoso -> sospechoso.getEdad() > ramiro.get().getEdad() ? 20 : FAIL_SCORE).orElse(PUNISH_SCORE);
     }
 
     // Restricciones
@@ -240,10 +250,6 @@ class Reglas {
                 + (s.isAficionadoAlDomino() ? 1 : 0)
                 + (s.isNacioEnAnioBisiesto() ? 1 : 0)
                 + (s.isQuiereASuMujer() ? 1 : 0)).mapToInt(Integer::intValue).sum();
-
-        if (sum == 8) {
-            System.out.println("hola");
-        }
 
         return sum == 8;
     }

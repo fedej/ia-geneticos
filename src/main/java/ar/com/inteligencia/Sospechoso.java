@@ -34,31 +34,28 @@ public class Sospechoso {
     private boolean campeonDeBillar;
     private boolean nacioEnAnioBisiesto;
 
-    public Sospechoso(final Chromosome<BitGene> chromosome) {
-        nombre = Nombre.fromChromosome(chromosome);
-        apellido = Apellido.fromChromosome(chromosome);
-        edad = getEdad(chromosome);
-        estadoCivil = EstadoCivil.fromChromosome(chromosome);
-        inocente = chromosome.getGene(8).booleanValue();
+    public Sospechoso(final Nombre nombre, final boolean[] atributos) {
+        this.nombre = nombre;
+        apellido = Apellido.fromChromosome(atributos);
+        edad = getEdad(atributos);
+        estadoCivil = EstadoCivil.fromChromosome(atributos);
 
-        acusoAGustavo = chromosome.getGene(9).booleanValue();
-        acusoAGustavo2 = chromosome.getGene(10).booleanValue();
-        quiereASuMujer = chromosome.getGene(11).booleanValue();
-        primosEnParis = chromosome.getGene(12).booleanValue();
-        primosEnLondres = chromosome.getGene(13).booleanValue();
-        aficionadoAlDomino = chromosome.getGene(14).booleanValue();
-        campeonDeBillar = chromosome.getGene(15).booleanValue();
-        nacioEnAnioBisiesto = chromosome.getGene(16).booleanValue();
+        acusoAGustavo = atributos[6];
+        acusoAGustavo2 = atributos[7];
+        quiereASuMujer = atributos[8];
+        primosEnParis = atributos[9];
+        primosEnLondres = atributos[10];
+        aficionadoAlDomino = atributos[11];
+        campeonDeBillar = atributos[12];
+        nacioEnAnioBisiesto = atributos[13];
+
+        inocente = atributos[14];
     }
 
-    private Integer getEdad(Chromosome<BitGene> chromosome) {
-        int gene0 = getGeneValue(chromosome, 4);
-        int gene1 = getGeneValue(chromosome, 5);
+    private Integer getEdad(final boolean[] atributos) {
+        int gene0 = atributos[2] ? 1 : 0;
+        int gene1 = atributos[3] ? 1 : 0;
         return edades.get(gene0 | (gene1 << 1));
-    }
-
-    private static int getGeneValue(Chromosome<BitGene> chromosome, int index) {
-        return chromosome.getGene(index).getBit() ? 1 : 0;
     }
 
     public String toString() {
