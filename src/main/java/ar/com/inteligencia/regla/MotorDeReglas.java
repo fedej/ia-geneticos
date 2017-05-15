@@ -34,14 +34,6 @@ public class MotorDeReglas {
         base += reglas._11_cerveraBisiesto();
         base += reglas._12_ramiroMasJovenQueLamata();
 
-        //base += reglas._13_unSoloAsesino() ? 1 : FAIL_SCORE * 10;
-        //base += reglas._14_unSoloEstadoCivil() ? 1 : FAIL_SCORE * 10;
-        //base += reglas._15_unSoloApellido() ? 1 : FAIL_SCORE * 10;
-        //base += reglas._16_unSoloEdad() ? 1 : FAIL_SCORE * 10;
-        //base += reglas._17_unSoloProp() ? 1 : FAIL_SCORE * 10;
-
-        //System.out.println(base);
-
         return base;
     }
 
@@ -59,20 +51,7 @@ public class MotorDeReglas {
                         && reglas._regla1Solo(Sospechoso::isPrimosEnLondres)
                         && reglas._regla1Solo(Sospechoso::isPrimosEnParis)
                         && reglas._regla1Solo(Sospechoso::isQuiereASuMujer)
-                        && reglas._13_unSoloAsesino()
-
-
-                //&& reglas._11_cerveraBisiesto() == Reglas.SUCCESS_SCORE
-                //&& reglas._1_felixMasJovenQueAbad() == Reglas.SUCCESS_SCORE
-                //&& reglas._10_villarCampeonBillar() == Reglas.SUCCESS_SCORE
-                //&& reglas._7_jesusDomino() == Reglas.SUCCESS_SCORE
-                //&& reglas._5_primos() == Reglas.SUCCESS_SCORE
-                //&& reglas._2_viudoY50SonInocentes() == Reglas.SUCCESS_SCORE
-                //&& reglas._9_gustavoMayorQueViudo() == Reglas.SUCCESS_SCORE
-                //&& reglas._11_cerveraBisiesto() == Reglas.SUCCESS_SCORE
-                //&& reglas._3_asesinoYDivorciadoAcusanAGustavo() == Reglas.SUCCESS_SCORE
-
-                ;
+                        && reglas._13_unSoloAsesino();
     }
 
 

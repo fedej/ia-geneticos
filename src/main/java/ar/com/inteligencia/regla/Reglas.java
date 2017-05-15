@@ -54,7 +54,6 @@ class Reglas {
 
     private static final double FAIL_SCORE = -2;
     private static final double PUNISH_SCORE = -10;
-    public static final double SUCCESS_SCORE = 10;
 
     // 1
     double _1_felixMasJovenQueAbad() {

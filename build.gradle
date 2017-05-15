@@ -18,3 +18,13 @@ dependencies {
     compile 'io.jenetics:jenetics:3.7.0'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.16'
 }
+
+jar {
+    manifest {
+        attributes "Main-Class": "$mainClassName"
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
